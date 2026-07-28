@@ -14,7 +14,7 @@
 
 --- 
 
-部分美术画面
+部分美术画面 (内容还在开发中)
 
 ![由VoidRegion制作](./media/demo/ClawStrike.gif)
 ![由VoidRegion制作](./media/demo/pounce.gif)
