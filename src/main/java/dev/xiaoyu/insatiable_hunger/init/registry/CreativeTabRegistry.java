@@ -16,7 +16,9 @@ public class CreativeTabRegistry {
                     .title(Component.translatable("itemGroup." + InsatiableHunger.MOD_ID))
                     .icon(() -> new ItemStack(ItemRegistry.GLUTTONY_SPAWN_EGG.get()))
                     .displayItems((parameters, output) -> {
-                        output.accept(ItemRegistry.GLUTTONY_SPAWN_EGG.get());
+                        ItemRegistry.ITEMS.getEntries().forEach(registryObject -> {
+                            output.accept(registryObject.get());
+                        });
                     })
                     .build());
 }
