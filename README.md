@@ -14,11 +14,7 @@
 
 --- 
 
-目前本mod正在招募程序，因为程序上班了所以没时间完成
-
-如果你对"让这头怪物在游戏里真正活过来"这件事感兴趣，欢迎翻翻仓库，或者开个 Issue 聊聊。
-
-部分美术画面（仓库中并未实装模型）
+部分美术画面 (内容还在开发中)
 
 ![由VoidRegion制作](./media/demo/ClawStrike.gif)
 ![由VoidRegion制作](./media/demo/pounce.gif)
