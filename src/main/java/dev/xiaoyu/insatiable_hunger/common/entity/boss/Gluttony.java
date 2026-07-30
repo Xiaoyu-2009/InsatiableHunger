@@ -1,11 +1,15 @@
 package dev.xiaoyu.insatiable_hunger.common.entity.boss;
 
+import dev.xiaoyu.insatiable_hunger.common.entity.IHBossInfoServer;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
@@ -18,13 +22,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.entity.PartEntity;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
 public class Gluttony extends Monster {
     private static final EntityDataAccessor<Integer> GROWTH_STAGE = SynchedEntityData.defineId(Gluttony.class, EntityDataSerializers.INT);
 
-    // 五阶段碰撞箱[尾部]
+    // 五阶段碰撞箱[尾巴]
     public final GluttonyPart tailPart;
     public final GluttonyPart tailMidPart;
     public final GluttonyPart tailBottomPart;
@@ -38,10 +43,12 @@ public class Gluttony extends Monster {
 
     public final AnimationState idleAnimationState = new AnimationState();
 
+    private final IHBossInfoServer bossInfo = new IHBossInfoServer(this.getDisplayName(), BossEvent.BossBarColor.RED, false, 0);
+
     public Gluttony(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
 
-        // 尾部
+        // 尾巴
         this.tailPart = new GluttonyPart(this, 3.7F, 2.4F);
         this.tailMidPart = new GluttonyPart(this, 3.5F, 2.0F);
         this.tailBottomPart = new GluttonyPart(this, 3.3F, 1.5F);
@@ -162,6 +169,10 @@ public class Gluttony extends Monster {
     public void tick() {
         super.tick();
 
+        if (!this.level().isClientSide) {
+            this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
+        }
+
         if (this.level().isClientSide) {
             if (this.getGrowthStage() == 5) {
                 this.idleAnimationState.startIfStopped(this.tickCount);
@@ -180,14 +191,18 @@ public class Gluttony extends Monster {
                 avector3d[j] = new Vec3(this.allParts[j].getX(), this.allParts[j].getY(), this.allParts[j].getZ());
             }
 
-            // 尾部
+            // Tail
             setPartPos(this.tailPart, 50, -123, sin, cos);
+            // Tailmid
             setPartPos(this.tailMidPart, 56, -182, sin, cos);
+            // Tailbottom
             setPartPos(this.tailBottomPart, 58, -240, sin, cos);
+            // Tailtip
             setPartPos(this.tailTipPart, 61, -295, sin, cos);
+            // bone7
             setPartPos(this.bone7Part, 62, -348, sin, cos);
 
-            // 头部
+            // Head
             setPartPos(this.headPart, 37, 118, sin, cos);
 
             for (int l = 0; l < this.allParts.length; ++l) {
@@ -205,5 +220,23 @@ public class Gluttony extends Monster {
         float rx = (float) 0 * cos - dz * sin;
         float rz = (float) 0 * sin + dz * cos;
         part.setPos(this.getX() + rx / 16.0F, this.getY() + dy / 16.0F, this.getZ() + rz / 16.0F);
+    }
+
+    @Override
+    public void startSeenByPlayer(@NotNull ServerPlayer player) {
+        super.startSeenByPlayer(player);
+        this.bossInfo.addPlayer(player);
+    }
+
+    @Override
+    public void stopSeenByPlayer(@NotNull ServerPlayer player) {
+        super.stopSeenByPlayer(player);
+        this.bossInfo.removePlayer(player);
+    }
+
+    @Override
+    public void setCustomName(@Nullable Component name) {
+        super.setCustomName(name);
+        this.bossInfo.setName(this.getDisplayName());
     }
 }

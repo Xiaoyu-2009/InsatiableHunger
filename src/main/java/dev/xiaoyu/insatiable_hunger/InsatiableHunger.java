@@ -1,10 +1,11 @@
 package dev.xiaoyu.insatiable_hunger;
 
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import dev.xiaoyu.insatiable_hunger.init.registry.CreativeTabRegistry;
 import dev.xiaoyu.insatiable_hunger.init.registry.EntityRegistry;
 import dev.xiaoyu.insatiable_hunger.init.registry.ItemRegistry;
+import dev.xiaoyu.insatiable_hunger.init.registry.NetworkRegistry;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,5 +20,6 @@ public class InsatiableHunger {
         EntityRegistry.ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
         ItemRegistry.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         CreativeTabRegistry.CREATIVE_MODE_TABS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        NetworkRegistry.register();
     }
 }
