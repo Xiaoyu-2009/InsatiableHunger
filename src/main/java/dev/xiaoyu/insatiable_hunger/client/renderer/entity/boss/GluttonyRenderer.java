@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("removal")
 public class GluttonyRenderer extends MobRenderer<Gluttony, EntityModel<Gluttony>> {
     private static final ResourceLocation ONE_TEXTURE = new ResourceLocation(InsatiableHunger.MOD_ID, "textures/entity/gluttony/one.png");
     private static final ResourceLocation THREE_TEXTURE = new ResourceLocation(InsatiableHunger.MOD_ID, "textures/entity/gluttony/three.png");

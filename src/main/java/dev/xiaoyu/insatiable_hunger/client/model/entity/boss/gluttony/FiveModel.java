@@ -7,6 +7,7 @@ package dev.xiaoyu.insatiable_hunger.client.model.entity.boss.gluttony;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.xiaoyu.insatiable_hunger.InsatiableHunger;
+import dev.xiaoyu.insatiable_hunger.client.animation.entity.boss.gluttony.GluttonyAnimation;
 import dev.xiaoyu.insatiable_hunger.common.entity.boss.Gluttony;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -410,6 +411,7 @@ public class FiveModel<T extends Gluttony> extends HierarchicalModel<T> {
 	@Override
 	public void setupAnim(@NotNull T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
+		this.animate(entity.idleAnimationState, GluttonyAnimation.IDLE, ageInTicks);
 	}
 
 	@Override

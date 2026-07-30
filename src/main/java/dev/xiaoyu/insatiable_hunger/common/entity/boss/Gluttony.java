@@ -6,6 +6,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
@@ -23,13 +24,19 @@ import java.util.Objects;
 public class Gluttony extends Monster {
     private static final EntityDataAccessor<Integer> GROWTH_STAGE = SynchedEntityData.defineId(Gluttony.class, EntityDataSerializers.INT);
 
-    // 五阶段多段碰撞箱[尾巴]
+    // 五阶段碰撞箱[尾巴]
     public final GluttonyPart tailPart;
     public final GluttonyPart tailMidPart;
     public final GluttonyPart tailBottomPart;
     public final GluttonyPart tailTipPart;
     public final GluttonyPart bone7Part;
     public final GluttonyPart[] fiveParts;
+
+    // 五阶段碰撞箱[头部]
+    public final GluttonyPart headPart;
+    public final GluttonyPart[] allParts;
+
+    public final AnimationState idleAnimationState = new AnimationState();
 
     public Gluttony(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
@@ -42,10 +49,18 @@ public class Gluttony extends Monster {
         this.bone7Part = new GluttonyPart(this, 3.2F, 0.7F);
 
         this.fiveParts = new GluttonyPart[]{
-                this.tailPart, this.tailMidPart, this.tailBottomPart, this.tailTipPart, this.bone7Part
+            this.tailPart, this.tailMidPart, this.tailBottomPart, this.tailTipPart, this.bone7Part
         };
 
-        this.setId(Entity.ENTITY_COUNTER.getAndAdd(this.fiveParts.length + 1) + 1);
+        // 头部
+        this.headPart = new GluttonyPart(this, 3.0F, 2.5F);
+
+        this.allParts = new GluttonyPart[]{
+            this.tailPart, this.tailMidPart, this.tailBottomPart, this.tailTipPart, this.bone7Part,
+            this.headPart
+        };
+
+        this.setId(Entity.ENTITY_COUNTER.getAndAdd(this.allParts.length + 1) + 1);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -122,9 +137,9 @@ public class Gluttony extends Monster {
     @Override
     public void setId(int id) {
         super.setId(id);
-        
-        for (int i = 0; i < this.fiveParts.length; i++) {
-            this.fiveParts[i].setId(id + i + 1);
+
+        for (int i = 0; i < this.allParts.length; i++) {
+            this.allParts[i].setId(id + i + 1);
         }
     }
 
@@ -135,7 +150,7 @@ public class Gluttony extends Monster {
 
     @Override
     public PartEntity<?>[] getParts() {
-        return this.fiveParts;
+        return this.allParts;
     }
 
     @Override
@@ -147,14 +162,22 @@ public class Gluttony extends Monster {
     public void tick() {
         super.tick();
 
+        if (this.level().isClientSide) {
+            if (this.getGrowthStage() == 5) {
+                this.idleAnimationState.startIfStopped(this.tickCount);
+            } else {
+                this.idleAnimationState.stop();
+            }
+        }
+
         if (this.getGrowthStage() == 5 && !this.isNoAi()) {
             float yaw = this.yBodyRot * Mth.DEG_TO_RAD;
             float sin = Mth.sin(yaw);
             float cos = Mth.cos(yaw);
 
-            Vec3[] avector3d = new Vec3[this.fiveParts.length];
-            for (int j = 0; j < this.fiveParts.length; ++j) {
-                avector3d[j] = new Vec3(this.fiveParts[j].getX(), this.fiveParts[j].getY(), this.fiveParts[j].getZ());
+            Vec3[] avector3d = new Vec3[this.allParts.length];
+            for (int j = 0; j < this.allParts.length; ++j) {
+                avector3d[j] = new Vec3(this.allParts[j].getX(), this.allParts[j].getY(), this.allParts[j].getZ());
             }
 
             // Tail
@@ -168,13 +191,16 @@ public class Gluttony extends Monster {
             // bone7
             setPartPos(this.bone7Part, 62, -348, sin, cos);
 
-            for (int l = 0; l < this.fiveParts.length; ++l) {
-                this.fiveParts[l].xo = avector3d[l].x;
-                this.fiveParts[l].yo = avector3d[l].y;
-                this.fiveParts[l].zo = avector3d[l].z;
-                this.fiveParts[l].xOld = avector3d[l].x;
-                this.fiveParts[l].yOld = avector3d[l].y;
-                this.fiveParts[l].zOld = avector3d[l].z;
+            // Head
+            setPartPos(this.headPart, 37, 118, sin, cos);
+
+            for (int l = 0; l < this.allParts.length; ++l) {
+                this.allParts[l].xo = avector3d[l].x;
+                this.allParts[l].yo = avector3d[l].y;
+                this.allParts[l].zo = avector3d[l].z;
+                this.allParts[l].xOld = avector3d[l].x;
+                this.allParts[l].yOld = avector3d[l].y;
+                this.allParts[l].zOld = avector3d[l].z;
             }
         }
     }
