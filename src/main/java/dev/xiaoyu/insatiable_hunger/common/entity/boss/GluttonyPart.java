@@ -11,8 +11,6 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.entity.PartEntity;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 public class GluttonyPart extends PartEntity<Gluttony> {
     private final EntityDimensions size;
 
@@ -27,7 +25,7 @@ public class GluttonyPart extends PartEntity<Gluttony> {
 
     @Override
     public boolean canBeCollidedWith() {
-        return true;
+        return super.canBeCollidedWith();
     }
 
     @Override
@@ -73,18 +71,5 @@ public class GluttonyPart extends PartEntity<Gluttony> {
     @Override
     public @NotNull EntityDimensions getDimensions(@NotNull Pose pose) {
         return this.size;
-    }
-
-    @Override
-    public void setId(int id) {
-        super.setId(id + 1);
-    }
-
-    public static void assignPartIDs(Gluttony parent) {
-        PartEntity<?>[] parts = parent.getParts();
-        for (int i = 0, partsLength = Objects.requireNonNull(parts).length; i < partsLength; i++) {
-            PartEntity<?> part = parts[i];
-            part.setId(parent.getId() + i);
-        }
     }
 }

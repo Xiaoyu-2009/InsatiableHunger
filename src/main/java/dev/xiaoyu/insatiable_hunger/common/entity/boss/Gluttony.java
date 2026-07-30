@@ -6,6 +6,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
@@ -43,6 +44,8 @@ public class Gluttony extends Monster {
         this.fiveParts = new GluttonyPart[]{
                 this.tailPart, this.tailMidPart, this.tailBottomPart, this.tailTipPart, this.bone7Part
         };
+
+        this.setId(Entity.ENTITY_COUNTER.getAndAdd(this.fiveParts.length + 1) + 1);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -117,22 +120,27 @@ public class Gluttony extends Monster {
     }
 
     @Override
+    public void setId(int id) {
+        super.setId(id);
+        
+        for (int i = 0; i < this.fiveParts.length; i++) {
+            this.fiveParts[i].setId(id + i + 1);
+        }
+    }
+
+    @Override
     public boolean isMultipartEntity() {
-        return this.getGrowthStage() == 5;
+        return true;
     }
 
     @Override
     public PartEntity<?>[] getParts() {
-        if (this.getGrowthStage() == 5) {
-            return this.fiveParts;
-        }
-        return new PartEntity[0];
+        return this.fiveParts;
     }
 
     @Override
     public void recreateFromPacket(@NotNull ClientboundAddEntityPacket packet) {
         super.recreateFromPacket(packet);
-        GluttonyPart.assignPartIDs(this);
     }
 
     @Override
