@@ -24,7 +24,7 @@ import java.util.Objects;
 public class Gluttony extends Monster {
     private static final EntityDataAccessor<Integer> GROWTH_STAGE = SynchedEntityData.defineId(Gluttony.class, EntityDataSerializers.INT);
 
-    // 五阶段碰撞箱[尾巴]
+    // 五阶段碰撞箱[尾部]
     public final GluttonyPart tailPart;
     public final GluttonyPart tailMidPart;
     public final GluttonyPart tailBottomPart;
@@ -41,7 +41,7 @@ public class Gluttony extends Monster {
     public Gluttony(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
 
-        // 尾巴
+        // 尾部
         this.tailPart = new GluttonyPart(this, 3.7F, 2.4F);
         this.tailMidPart = new GluttonyPart(this, 3.5F, 2.0F);
         this.tailBottomPart = new GluttonyPart(this, 3.3F, 1.5F);
@@ -180,18 +180,14 @@ public class Gluttony extends Monster {
                 avector3d[j] = new Vec3(this.allParts[j].getX(), this.allParts[j].getY(), this.allParts[j].getZ());
             }
 
-            // Tail
+            // 尾部
             setPartPos(this.tailPart, 50, -123, sin, cos);
-            // Tailmid
             setPartPos(this.tailMidPart, 56, -182, sin, cos);
-            // Tailbottom
             setPartPos(this.tailBottomPart, 58, -240, sin, cos);
-            // Tailtip
             setPartPos(this.tailTipPart, 61, -295, sin, cos);
-            // bone7
             setPartPos(this.bone7Part, 62, -348, sin, cos);
 
-            // Head
+            // 头部
             setPartPos(this.headPart, 37, 118, sin, cos);
 
             for (int l = 0; l < this.allParts.length; ++l) {
