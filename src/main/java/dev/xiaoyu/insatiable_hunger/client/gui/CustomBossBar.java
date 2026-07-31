@@ -15,7 +15,7 @@ public class CustomBossBar {
     public static final CustomBossBar GLUTTONY_BAR = new CustomBossBar(
             new ResourceLocation(InsatiableHunger.MOD_ID, "textures/gui/boss_bar/gltbar_base.png"),
             new ResourceLocation(InsatiableHunger.MOD_ID, "textures/gui/boss_bar/gltbar_overlay.png"),
-            5, 16, 0, 6, -4, -19, 256, 32, 25, 182, ChatFormatting.DARK_AQUA
+            5, 16, 0, 6, -4, -15, 256, 32, 25, 182, ChatFormatting.DARK_AQUA
     );
 
     private final ResourceLocation baseTexture;
@@ -63,9 +63,9 @@ public class CustomBossBar {
         Component component = event.getBossEvent().getName().copy().withStyle(getTextColor());
         Minecraft.getInstance().getProfiler().pop();
 
-        /*int l = Minecraft.getInstance().font.width(component);
+        int l = Minecraft.getInstance().font.width(component);
         int i1 = i / 2 - l / 2;
-        guiGraphics.drawString(Minecraft.getInstance().font, component, i1, j, 16777215);*/
+        /*guiGraphics.drawString(Minecraft.getInstance().font, component, i1, j, 16777215);*/
 
         if (hasOverlay()) {
             Minecraft.getInstance().getProfiler().push("IHBossBarOverlay");

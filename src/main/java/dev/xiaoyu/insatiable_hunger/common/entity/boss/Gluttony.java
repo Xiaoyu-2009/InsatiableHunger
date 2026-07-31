@@ -42,6 +42,7 @@ public class Gluttony extends Monster {
     public final GluttonyPart[] allParts;
 
     public final AnimationState idleAnimationState = new AnimationState();
+    public final AnimationState walkAnimationState = new AnimationState();
 
     private final IHBossInfoServer bossInfo = new IHBossInfoServer(this.getDisplayName(), BossEvent.BossBarColor.RED, false, 0);
 
@@ -175,9 +176,16 @@ public class Gluttony extends Monster {
 
         if (this.level().isClientSide) {
             if (this.getGrowthStage() == 5) {
-                this.idleAnimationState.startIfStopped(this.tickCount);
+                if (this.walkAnimation.isMoving()) {
+                    this.walkAnimationState.startIfStopped(this.tickCount);
+                    this.idleAnimationState.stop();
+                } else {
+                    this.idleAnimationState.startIfStopped(this.tickCount);
+                    this.walkAnimationState.stop();
+                }
             } else {
                 this.idleAnimationState.stop();
+                this.walkAnimationState.stop();
             }
         }
 

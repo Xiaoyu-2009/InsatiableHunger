@@ -13,16 +13,20 @@ import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class FiveModel<T extends Gluttony> extends HierarchicalModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	@SuppressWarnings("removal")
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(InsatiableHunger.MOD_ID, "gluttony_five"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(InsatiableHunger.MOD_ID, "gluttony"), "main");
 
-	private final ModelPart Root;
+    private final ModelPart Root;
 	private final ModelPart Backleg;
 	private final ModelPart bone4;
 	private final ModelPart bone5;
@@ -138,7 +142,7 @@ public class FiveModel<T extends Gluttony> extends HierarchicalModel<T> {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition Root = partdefinition.addOrReplaceChild("Root", CubeListBuilder.create(), PartPose.offsetAndRotation(120.0F, 17.0F, 186.0F, 0.0F, 0.4363F, 0.0F));
+		PartDefinition Root = partdefinition.addOrReplaceChild("Root", CubeListBuilder.create(), PartPose.offsetAndRotation(38.0F, 17.0F, 81.0F, 0.0F, 0.1309F, 0.0F));
 
 		PartDefinition Backleg = Root.addOrReplaceChild("Backleg", CubeListBuilder.create(), PartPose.offsetAndRotation(-38.3747F, -62.0F, -17.1631F, 0.0499F, 0.3027F, 0.0411F));
 
@@ -207,7 +211,7 @@ public class FiveModel<T extends Gluttony> extends HierarchicalModel<T> {
 
 		PartDefinition Tendrils_in_body3 = Chest.addOrReplaceChild("Tendrils_in_body3", CubeListBuilder.create(), PartPose.offset(24.0F, -21.0F, -52.0F));
 
-		PartDefinition cube_r14 = Tendrils_in_body3.addOrReplaceChild("cube_r14", CubeListBuilder.create().texOffs(635, 578).addBox(0.8851F, -51.6891F, -19.617F, 0.0F, 56.0F, 37.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, 12.0F, -3.0F, -1.1937F, 1.1068F, -1.2215F));
+		PartDefinition cube_r14 = Tendrils_in_body3.addOrReplaceChild("cube_r14", CubeListBuilder.create().texOffs(635, 578).addBox(0.885F, -51.6891F, -19.617F, 0.0F, 56.0F, 37.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, 12.0F, -3.0F, -1.1937F, 1.1068F, -1.2215F));
 
 		PartDefinition Tendrils_in_body6 = Chest.addOrReplaceChild("Tendrils_in_body6", CubeListBuilder.create(), PartPose.offset(-20.0F, -27.0F, -23.0F));
 
@@ -291,9 +295,9 @@ public class FiveModel<T extends Gluttony> extends HierarchicalModel<T> {
 
 		PartDefinition bone2 = Finger2.addOrReplaceChild("bone2", CubeListBuilder.create(), PartPose.offset(-1.0F, -10.0F, -28.0F));
 
-		PartDefinition cube_r42 = bone2.addOrReplaceChild("cube_r42", CubeListBuilder.create().texOffs(227, 268).addBox(14.6851F, 7.2642F, -2.1621F, 6.0F, 16.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(2.0F, 27.0F, 6.0F, -1.4889F, 1.2211F, 1.6144F));
+		PartDefinition cube_r42 = bone2.addOrReplaceChild("cube_r42", CubeListBuilder.create().texOffs(227, 268).addBox(14.6851F, 7.2642F, -2.162F, 6.0F, 16.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(2.0F, 27.0F, 6.0F, -1.4889F, 1.2211F, 1.6144F));
 
-		PartDefinition cube_r43 = bone2.addOrReplaceChild("cube_r43", CubeListBuilder.create().texOffs(299, 116).addBox(-6.7913F, -1.323F, -2.6027F, 29.0F, 9.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.0F, 0.0F, 0.0F, -1.5342F, 0.6983F, 1.5609F));
+		PartDefinition cube_r43 = bone2.addOrReplaceChild("cube_r43", CubeListBuilder.create().texOffs(299, 116).addBox(-6.7913F, -1.323F, -2.6026F, 29.0F, 9.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.0F, 0.0F, 0.0F, -1.5342F, 0.6983F, 1.5609F));
 
 		PartDefinition Finger3 = fingersright.addOrReplaceChild("Finger3", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, 0.0F, -9.0F, 0.0F, -0.1745F, 0.0F));
 
@@ -301,9 +305,9 @@ public class FiveModel<T extends Gluttony> extends HierarchicalModel<T> {
 
 		PartDefinition bone8 = Finger3.addOrReplaceChild("bone8", CubeListBuilder.create(), PartPose.offset(-1.0F, -10.0F, -28.0F));
 
-		PartDefinition cube_r45 = bone8.addOrReplaceChild("cube_r45", CubeListBuilder.create().texOffs(227, 268).addBox(14.6851F, 7.2642F, -2.1621F, 6.0F, 16.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 27.0F, 6.0F, -1.4889F, 1.2211F, 1.6144F));
+		PartDefinition cube_r45 = bone8.addOrReplaceChild("cube_r45", CubeListBuilder.create().texOffs(227, 268).addBox(14.6851F, 7.2642F, -2.162F, 6.0F, 16.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 27.0F, 6.0F, -1.4889F, 1.2211F, 1.6144F));
 
-		PartDefinition cube_r46 = bone8.addOrReplaceChild("cube_r46", CubeListBuilder.create().texOffs(299, 116).addBox(-6.7913F, -1.323F, -2.6027F, 29.0F, 9.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, 0.0F, 0.0F, -1.5342F, 0.6983F, 1.5609F));
+		PartDefinition cube_r46 = bone8.addOrReplaceChild("cube_r46", CubeListBuilder.create().texOffs(299, 116).addBox(-6.7913F, -1.323F, -2.6026F, 29.0F, 9.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, 0.0F, 0.0F, -1.5342F, 0.6983F, 1.5609F));
 
 		PartDefinition Finger4 = fingersright.addOrReplaceChild("Finger4", CubeListBuilder.create(), PartPose.offsetAndRotation(5.0F, 0.0F, -5.0F, 0.0F, -0.3927F, 0.0F));
 
@@ -353,9 +357,9 @@ public class FiveModel<T extends Gluttony> extends HierarchicalModel<T> {
 
 		PartDefinition bone13 = Finger5.addOrReplaceChild("bone13", CubeListBuilder.create(), PartPose.offset(1.0F, -10.0F, -28.0F));
 
-		PartDefinition cube_r63 = bone13.addOrReplaceChild("cube_r63", CubeListBuilder.create().texOffs(227, 268).mirror().addBox(-20.6851F, 7.2642F, -2.1621F, 6.0F, 16.0F, 5.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(-2.0F, 27.0F, 6.0F, -1.4889F, -1.2211F, -1.6144F));
+		PartDefinition cube_r63 = bone13.addOrReplaceChild("cube_r63", CubeListBuilder.create().texOffs(227, 268).mirror().addBox(-20.6851F, 7.2642F, -2.162F, 6.0F, 16.0F, 5.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(-2.0F, 27.0F, 6.0F, -1.4889F, -1.2211F, -1.6144F));
 
-		PartDefinition cube_r64 = bone13.addOrReplaceChild("cube_r64", CubeListBuilder.create().texOffs(299, 116).mirror().addBox(-22.2087F, -1.323F, -2.6027F, 29.0F, 9.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(-1.0F, 0.0F, 0.0F, -1.5342F, -0.6983F, -1.5609F));
+		PartDefinition cube_r64 = bone13.addOrReplaceChild("cube_r64", CubeListBuilder.create().texOffs(299, 116).mirror().addBox(-22.2087F, -1.323F, -2.6026F, 29.0F, 9.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(-1.0F, 0.0F, 0.0F, -1.5342F, -0.6983F, -1.5609F));
 
 		PartDefinition Finger6 = fingersleft.addOrReplaceChild("Finger6", CubeListBuilder.create(), PartPose.offsetAndRotation(-2.0F, 0.0F, -10.0F, 0.0F, 0.1745F, 0.0F));
 
@@ -363,9 +367,9 @@ public class FiveModel<T extends Gluttony> extends HierarchicalModel<T> {
 
 		PartDefinition bone14 = Finger6.addOrReplaceChild("bone14", CubeListBuilder.create(), PartPose.offset(1.0F, -10.0F, -28.0F));
 
-		PartDefinition cube_r66 = bone14.addOrReplaceChild("cube_r66", CubeListBuilder.create().texOffs(227, 268).mirror().addBox(-20.6851F, 7.2642F, -2.1621F, 6.0F, 16.0F, 5.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, 27.0F, 6.0F, -1.4889F, -1.2211F, -1.6144F));
+		PartDefinition cube_r66 = bone14.addOrReplaceChild("cube_r66", CubeListBuilder.create().texOffs(227, 268).mirror().addBox(-20.6851F, 7.2642F, -2.162F, 6.0F, 16.0F, 5.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, 27.0F, 6.0F, -1.4889F, -1.2211F, -1.6144F));
 
-		PartDefinition cube_r67 = bone14.addOrReplaceChild("cube_r67", CubeListBuilder.create().texOffs(299, 116).mirror().addBox(-22.2087F, -1.323F, -2.6027F, 29.0F, 9.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(1.0F, 0.0F, 0.0F, -1.5342F, -0.6983F, -1.5609F));
+		PartDefinition cube_r67 = bone14.addOrReplaceChild("cube_r67", CubeListBuilder.create().texOffs(299, 116).mirror().addBox(-22.2087F, -1.323F, -2.6026F, 29.0F, 9.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(1.0F, 0.0F, 0.0F, -1.5342F, -0.6983F, -1.5609F));
 
 		PartDefinition Finger7 = fingersleft.addOrReplaceChild("Finger7", CubeListBuilder.create(), PartPose.offsetAndRotation(18.0F, 0.0F, -6.0F, 0.0F, -0.48F, 0.0F));
 
@@ -417,15 +421,16 @@ public class FiveModel<T extends Gluttony> extends HierarchicalModel<T> {
 	}
 
 	@Override
-	public void setupAnim(@NotNull T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
-		/*this.animate(entity.idleAnimationState, GluttonyAnimation.IDLE, ageInTicks);*/
+		this.animate(entity.walkAnimationState, GluttonyAnimation.WALK, ageInTicks);
+		this.animate(entity.idleAnimationState, GluttonyAnimation.IDLE, ageInTicks);
 	}
 
-	@Override
-	public @NotNull ModelPart root() {
-		return this.Root;
-	}
+    @Override
+    public @NotNull ModelPart root() {
+        return this.Root;
+    }
 
 	@Override
 	public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
