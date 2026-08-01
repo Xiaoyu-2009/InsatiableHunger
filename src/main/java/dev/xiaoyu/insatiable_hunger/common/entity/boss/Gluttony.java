@@ -1,12 +1,15 @@
 package dev.xiaoyu.insatiable_hunger.common.entity.boss;
 
 import dev.xiaoyu.insatiable_hunger.common.entity.IHBossInfoServer;
+import dev.xiaoyu.insatiable_hunger.common.entity.ai.behavior.boss.GluttonyAi;
+import com.mojang.serialization.Dynamic;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
@@ -15,6 +18,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
@@ -75,6 +79,27 @@ public class Gluttony extends Monster {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 8.0D)
                 .add(Attributes.ATTACK_DAMAGE, 4.0D);
+    }
+
+    @Override
+    protected @NotNull Brain<?> makeBrain(@NotNull Dynamic<?> dynamic) {
+        return GluttonyAi.makeBrain(this, dynamic);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public @NotNull Brain<Gluttony> getBrain() {
+        return (Brain<Gluttony>) super.getBrain();
+    }
+
+    @Override
+    protected void customServerAiStep() {
+        ServerLevel serverLevel = (ServerLevel) this.level();
+        serverLevel.getProfiler().push("gluttonyBrain");
+        this.getBrain().tick(serverLevel, this);
+        serverLevel.getProfiler().pop();
+        super.customServerAiStep();
+        GluttonyAi.updateActivity(this);
     }
 
     @Override
@@ -176,7 +201,7 @@ public class Gluttony extends Monster {
 
         if (this.level().isClientSide) {
             if (this.getGrowthStage() == 5) {
-                if (this.walkAnimation.isMoving()) {
+                if (this.xo != this.getX() || this.zo != this.getZ()) {
                     this.walkAnimationState.startIfStopped(this.tickCount);
                     this.idleAnimationState.stop();
                 } else {
